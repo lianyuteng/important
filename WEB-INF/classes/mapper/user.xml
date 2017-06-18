@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.DaoUser">
+
+
+
+	<select id="checkNameExist" parameterType="String" resultType="int">
+
+		select count(*) from Administrators where name = #{0};
+
+	</select>
+
+
+	<!-- 如果传递的是普通类型变量， #{0} 代表第一个变量， -->
+	<!-- 如果传递的是bean，#{name} #{属性名} -->
+	<!-- 返回多个对象，返回类型是 resultType="beanname" dao方法用list<bean> 接收返回值 -->
+	<!-- 如果是插入的话，会把插入字段的自增ID返回给方法接收的值。 -->
+
+
+
+
+
+
+	<select id="checkLogin" parameterType="com.example.controll.login.AdminBean"
+		resultType="int">
+		select count(*) from Administrators where name = #{name} and password =
+		#{password};
+	</select>
+	<select id="getAllInfo" resultType="com.example.controller.student.StudentBean">
+		select id,name,address,email,phone,birthday,cid1 math,cid2 yuwen,cid3
+		english,cid4 html from score inner join student s on s.id = score.sid;
+
+	</select>
+
+
+<!--    ,math,yuwen,english,html 
+
+		,
+-->
+
+
+
+	<insert id="addStudent" parameterType="com.example.controller.student.StudentBean"
+	 useGeneratedKeys="true"	keyProperty="id">
+		insert into student (name,address,phone,birthday)
+		values
+		(#{name},#{address},#{phone},#{birthday});
+	</insert>
+	
+	<insert id="addScore" parameterType="com.example.controller.student.StudentBean"  >
+	insert into score  values (#{id},#{math},#{yuwen},#{english},#{html});
+	
+	</insert>
+
+
+
+
+
+</mapper>
